@@ -1,0 +1,15 @@
+# build output
+bin/
+*.exe
+
+# demo / runtime data
+data/
+
+# local verification artefacts
+.verify-*.log
+.verify-*.ps1
+*.test
+
+# editor
+.idea/
+.vscode/

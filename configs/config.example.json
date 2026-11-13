@@ -1,0 +1,77 @@
+{
+  "inbox_dir": "./data/inbox",
+  "out_dir": "./data/out",
+  "work_dir": "./data/work",
+  "failed_dir": "./data/failed",
+
+  "max_file_size": 67108864,
+  "max_inflight_bytes": 134217728,
+
+  "poll_interval": "200ms",
+  "stable_age": "300ms",
+
+  "queue_size": 16,
+
+  "metrics_addr": "127.0.0.1:9090",
+  "log_level": "info",
+  "log_format": "text",
+
+  "compress": {
+    "level": 6
+  },
+
+  "convert": {
+    "command": []
+  },
+
+  "shutdown": {
+    "grace": "15s",
+    "hard": "5s"
+  },
+
+  "recovery": {
+    "mode": "requeue"
+  },
+
+  "stages": [
+    {
+      "name": "scan",
+      "workers": 2,
+      "timeout": "10s",
+      "queue_size": 16,
+      "backoff": {
+        "base": "100ms",
+        "max": "2s",
+        "factor": 2,
+        "jitter": 0.2,
+        "max_attempts": 3
+      }
+    },
+    {
+      "name": "convert",
+      "workers": 4,
+      "timeout": "30s",
+      "queue_size": 16,
+      "backoff": {
+        "base": "200ms",
+        "max": "5s",
+        "factor": 2,
+        "jitter": 0.2,
+        "max_attempts": 3
+      }
+    },
+    {
+      "name": "compress",
+      "workers": 2,
+      "timeout": "30s",
+      "queue_size": 16,
+      "backoff": {
+        "base": "200ms",
+        "max": "5s",
+        "factor": 2,
+        "jitter": 0.2,
+        "max_attempts": 3
+      }
+    }
+  ]
+}
